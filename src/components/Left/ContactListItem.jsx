@@ -11,8 +11,8 @@ padding-right: 5px;
 display: flex;
 align-items: center;
 cursor: pointer;
-&focus {
-    background-color: #f0f2f5;
+:hover {
+    background-color: #f8f8f8
 }
 &.active {
     background-color: #f0f2f5;
