@@ -6,7 +6,6 @@ import ContactList from "./ContactList";
 
 const Container = styled.div`
     flex: 30%;
-    background-color: #f0f2f5;
     display: flex;
     flex-direction: column;
 `

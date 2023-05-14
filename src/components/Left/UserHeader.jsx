@@ -8,6 +8,7 @@ height: 49px;
 min-height: 49px;
 padding-top: 5px;
 padding-bottom: 5px;
+background-color: #f0f2f5;
 display: flex;
 justify-content: space-between;
 align-items: center;

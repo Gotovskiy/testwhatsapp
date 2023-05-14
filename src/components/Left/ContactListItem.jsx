@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ChoseContact } from "../../store/ContactSlice";
-
+import { ChoseContact, UptadeUserInfo } from "../../store/ContactSlice";
+import { useEffect } from "react";
+import axios from "axios";
 const Container = styled.div`
 box-sizing: border-box;
 width: 100%;
@@ -44,13 +45,29 @@ overflow: hidden;
 font-size: 14px;
 `
 
-function ContactListItem({avatar,phone,id,message}) {
+function ContactListItem({phone,id,message}) {
     const dispatch = useDispatch();
     const activeIndex = useSelector(state => state.contacts.ActiveIndex)
-    const SavedContacts = useSelector(state => state.contacts.SavedContacts)
+    const SavedContacts = useSelector(state => state.contacts.SavedContacts);
+    const itemIndex = SavedContacts.findIndex(item => item.id === id)
+
+    const idinstance = "1101820260";
+    const ApiTokenInstance = "7d514770abd246669d78fe7ca3f7f9f1e735e984e6a94be380"
+    
+    useEffect(() => {
+        getFullInfo();  
+        },[]);
+        
+  const getFullInfo = async () => {
+       await axios.post(`https://api.green-api.com/waInstance${idinstance}/GetContactInfo/${ApiTokenInstance}`, {chatId: id})
+  .then(res => {{dispatch(UptadeUserInfo(res.data))}})
+        }
     return ( 
-    <Container className={id==SavedContacts[activeIndex].id?"active":""} key={id} onClick={() => dispatch(ChoseContact(id))}>
-     <ContactAvatar src={avatar}/>
+    <Container 
+    className={activeIndex !== null && id==SavedContacts[activeIndex].id?"active":""} 
+    key={id} 
+    onClick={() => dispatch(ChoseContact(id))}>
+     <ContactAvatar src={SavedContacts[itemIndex].fullinfo!=undefined && SavedContacts[itemIndex].fullinfo.avatar.lenght > 0 ? SavedContacts[itemIndex].fullinfo.avatar:"./img/user_first.png"}/>
         <InfoBox>
          <Number>{phone}</Number>
          <Message>{message}</Message>   

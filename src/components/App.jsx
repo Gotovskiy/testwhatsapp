@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Left from './Left/Left'
 import Right from './Right/Right'
-
+import { useSelector } from 'react-redux'
 const Container = styled.div`
  position: relative;
  height: 100vh;
@@ -34,14 +34,24 @@ const Application = styled.div`
   max-width: 1600px;
   display: flex;
 `
+const NoActivePage = styled.div`
+    flex: 70%;
+    height: 100%;
+    background-color: #f0f2f5;
+    border-left: 1px solid #e9edef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 function App() {
+  const ActiveIndex = useSelector(state => state.contacts.ActiveIndex);
 
   return (
     <Container>
            <Application>
             <Left/>
-            <Right/>
+            { ActiveIndex != null ? <Right/> : <NoActivePage>Chose contact</NoActivePage> }
            </Application>
     <Background>
     <BackgroundHead/>
