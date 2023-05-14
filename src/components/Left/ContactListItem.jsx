@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ChoseContact } from "../../store/ContactSlice";
 
 const Container = styled.div`
@@ -11,7 +11,12 @@ padding-right: 5px;
 display: flex;
 align-items: center;
 cursor: pointer;
-`
+&focus {
+    background-color: #f0f2f5;
+}
+&.active {
+    background-color: #f0f2f5;
+}`
 const ContactAvatar = styled.img`
 width:49px;
 height:49px;
@@ -41,8 +46,10 @@ font-size: 14px;
 
 function ContactListItem({avatar,phone,id,message}) {
     const dispatch = useDispatch();
+    const activeIndex = useSelector(state => state.contacts.ActiveIndex)
+    const SavedContacts = useSelector(state => state.contacts.SavedContacts)
     return ( 
-    <Container key={id} onClick={() => dispatch(ChoseContact(id))}>
+    <Container className={id==SavedContacts[activeIndex].id?"active":""} key={id} onClick={() => dispatch(ChoseContact(id))}>
      <ContactAvatar src={avatar}/>
         <InfoBox>
          <Number>{phone}</Number>

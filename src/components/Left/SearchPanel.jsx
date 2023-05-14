@@ -35,7 +35,7 @@ border: none;
 background-color: #f0f2f5;
 height: 80%;
 width: 85%;
-list-style: none;
+outline: none;
 `
 
 function SearchPanel() {
