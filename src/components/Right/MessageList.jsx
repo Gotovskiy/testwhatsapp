@@ -1,8 +1,7 @@
 import React from "react";
 import Message from "./Message";
 function MessageList({currentMessages}) {
-   const Messages = currentMessages.map((item) => {return (<Message key={item.id} type={item.type} text={item.message}/>)});
-   console.log(Messages);
+   const Messages = currentMessages.map((item) => {return (<Message key={item.id} type={"received"} text={item.message}/>)});
 return (
     <>
     {Messages}

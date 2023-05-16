@@ -3,7 +3,7 @@ import React, { useEffect, useId, useState } from "react";
 import ContactListItem from "./ContactListItem";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import {getContacts , getContactInfo, choseContact} from "../../store/ContactSlice";
+import {getContacts , getContactInfo, choseContact, receiveMessage} from "../../store/ContactSlice";
 const Container = styled.div`
 width: 100%;
 height: 95%;
@@ -40,8 +40,14 @@ function ContactList() {
     useEffect(() => {
       if(savedContactsInfoLoaded){
         setLoad(true);
+        setInterval(() => {
+          dispatch(receiveMessage())
+        }, 20000);
       };
     }, [savedContactsInfoLoaded])
+
+
+
 
     return ( 
     <Container> 

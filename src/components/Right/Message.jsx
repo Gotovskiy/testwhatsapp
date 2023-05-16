@@ -14,7 +14,9 @@ margin-right: 15px;
 margin-left: 15px;
 align-items: start;
 justify-content: start;
-
+&>* {
+background-color: rgb(99, 166, 230) ;
+}
 }
 `
 const TextBox = styled.div`
@@ -41,7 +43,7 @@ function Message({type , text}) {
     
     return ( 
         <Container className={type} >
-         <TextBox readOnly={true}>{text}</TextBox>
+         <TextBox  readOnly={true}>{text}</TextBox>
         </Container>
      );
 }

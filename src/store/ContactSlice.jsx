@@ -6,9 +6,9 @@ export const getContacts = createAsyncThunk(
    async (payload , { getState }) => {
       const state = getState();
       try
-      { console.log(state)
+      { 
       const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/getContacts/${state.contacts.ApiTokenInstance}`)
-      const data = await response.data.slice(80 , 90)
+      const data = await response.data.slice(0 , 10)
       return data;
    }
       catch(error) {
@@ -35,13 +35,32 @@ export const sendMessage = createAsyncThunk(
    async (payload , { getState }) => {
       const state = getState();
       try
-      { console.log(state)
-      const response = await axios.post(`https://api.green-api.com/waInstance${state.contacts.idinstance}/sendMessage/${state.contacts.ApiTokenInstance}` , {chatId: payload.ActiveIndex , message:payload.text})
+      { 
+      const response = await axios.post(`https://api.green-api.com/waInstance${state.contacts.idinstance}/sendMessage/${state.contacts.ApiTokenInstance}` , {"chatId": payload.ActiveIndex , "message":payload.text})
       const data = await response.data;
       return data;
    }
       catch(error) {
          console.log(Error)
+      }
+   }
+)
+export const receiveMessage = createAsyncThunk(
+   `contacts/receiveMessage`,
+   async (_, { getState }) => {
+      const state = getState();
+      try
+      { 
+      const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/ReceiveNotification/${state.contacts.ApiTokenInstance}`)
+      const data = await response.data;
+      if(data.receiptId != undefined){
+      await axios.delete(`https://api.green-api.com/waInstance${state.contacts.idinstance}/deleteNotification/${state.contacts.ApiTokenInstance}/${data.receiptId}`)
+      return data;
+   }
+   else return
+      
+   }
+      catch(error) {
       }
    }
 )
@@ -106,6 +125,19 @@ const ContactSlice = createSlice({
       },
       [sendMessage.fulfilled]: (state , action) => {
          console.log("your message send!" , action.payload)
+      },
+      [receiveMessage.fulfilled]:(state , action) => {
+         if(action.payload === undefined){
+            return
+         }
+         else{
+         const id = Date.now();
+         const chatid = action.payload.body.senderData.chatId
+         const message = action.payload.body.messageData.textMessageData.textMessage 
+         if (state.sessionMessages[[chatid]] != undefined){
+            state.sessionMessages[[chatid]].push({"message":message, "type":"received" , "id":id});   
+         }}
+
       },
       
     }
