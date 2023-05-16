@@ -55,7 +55,6 @@ export const receiveMessage = createAsyncThunk(
       const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/ReceiveNotification/${state.contacts.ApiTokenInstance}`,{signal: controller.signal})
       const data = await response.data;
       await axios.delete(`https://api.green-api.com/waInstance${state.contacts.idinstance}/deleteNotification/${state.contacts.ApiTokenInstance}/${data.receiptId}`)
-      console.log(data)
       if (data == null || data.body.typeWebhook == "outgoingMessageStatus"){
          controller.abort()
       }

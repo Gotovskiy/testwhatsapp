@@ -24,19 +24,9 @@ justify-content: end;
 overflow-y:auto;
 overflow-x:hidden;
 ::-webkit-scrollbar {
-    height: 6px;
-    width: 4px;
-    background: #262b2c;
+display: none;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #b4b2b3;
-    -webkit-border-radius: 1ex;
-}
-
-::-webkit-scrollbar-corner {
-    background: #000;
-}
 &.received {
 align-items: start;
 }
