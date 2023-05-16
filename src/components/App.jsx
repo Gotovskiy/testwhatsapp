@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Left from './Left/Left'
 import Right from './Right/Right'
 import { useSelector } from 'react-redux'
+import ModalWindow from './ModalWindow'
+import { faL } from '@fortawesome/free-solid-svg-icons'
 const Container = styled.div`
  position: relative;
  height: 100vh;
@@ -45,9 +47,18 @@ const NoActivePage = styled.div`
 `
 
 function App() {
-  const ActiveIndex = useSelector(state => state.contacts.ActiveIndex);
+  const ActiveIndex = useSelector(state => state.contacts.activeIndex);
+  const [login , setLogin] = useState(false)
 
-  return (
+  const loadLogin = () => {
+    setLogin(true);
+  }
+
+  return (<>
+    {
+    !login?
+    <ModalWindow loadLogin = {loadLogin}/>
+    :
     <Container>
            <Application>
             <Left/>
@@ -56,7 +67,9 @@ function App() {
     <Background>
     <BackgroundHead/>
     </Background>
-    </Container>
+    </Container>}
+    
+    </>
   )
 }
 

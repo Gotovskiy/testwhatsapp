@@ -25,12 +25,19 @@ font-size: 16px;
 
 
 function ChatHeader() {
-    const Contacts = useSelector(state => state.contacts.SavedContacts)
-    const ActiveIndex = useSelector(state => state.contacts.ActiveIndex)
+    const savedContactsInfo = useSelector(state => state.contacts.savedContactsInfo)
+    const activeIndex = useSelector(state => state.contacts.activeIndex)
+    const Index = savedContactsInfo.findIndex(item => item.chatId === activeIndex)
+    console.log(Index , activeIndex)
     return ( 
     <Container >
-    <ActiveContactAvatar src={Contacts[ActiveIndex].avatar}/>
-    <ActiveContactNumber>{Contacts[ActiveIndex].phone}</ActiveContactNumber>
+    <ActiveContactAvatar src={
+        savedContactsInfo[Index].avatar.length > 0
+        ?
+        savedContactsInfo[Index].avatar 
+        : 
+        "./img/user_first.png"}/>
+    <ActiveContactNumber>{savedContactsInfo[Index].name}</ActiveContactNumber>
     </Container> );
 }
 

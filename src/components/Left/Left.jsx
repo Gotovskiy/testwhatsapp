@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import UserHeader from "./UserHeader";
-import SearchPanel from "./SearchPanel";
+import AddContactPanel from "./AddContactPanel";
 import ContactList from "./ContactList";
 
 const Container = styled.div`
@@ -14,7 +14,7 @@ function Left() {
     return (
     <Container>
      <UserHeader/>
-     <SearchPanel/>
+     <AddContactPanel/>
      <ContactList/>   
     </Container>
     );

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 
@@ -35,11 +35,16 @@ align-items: center;
 justify-content: center;
 `
 
-function SendInput() {
+function SendInput({changeMessages}) {
+    const [inputText , setInputText] = useState("")
+   const handleValueChange = (event) => {
+        setInputText(event.target.value);
+      };
+
     return ( 
         <Container>
-        <MessageInput placeholder="Введите сообщение"/>
-        <SendBtn>
+        <MessageInput placeholder="Введите сообщение" value={inputText} onChange={(e) => handleValueChange(e)}/>
+        <SendBtn onClick={() => {changeMessages(inputText) , setInputText("")}}>
         <FontAwesomeIcon icon={faPaperPlane} />
         </SendBtn>    
         </Container>
