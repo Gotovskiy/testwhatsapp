@@ -24,6 +24,7 @@ const LoginForm = styled.div`
   align-items: center;
   background: #fff;
   width: 40vw;
+  min-width: 400px;
   border-radius: 4px;
   left: 50%;
   top: 50%;

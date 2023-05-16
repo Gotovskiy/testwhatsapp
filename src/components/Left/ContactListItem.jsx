@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { choseContact,} from "../../store/ContactSlice";
 
@@ -23,7 +22,6 @@ width:49px;
 height:49px;
 margin-left: 10px;
 border-radius: 30px;
-border: 3px solid #d1d7db
 `
 const InfoBox = styled.div`
 height: 100%;

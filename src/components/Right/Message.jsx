@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const Container = styled.li`
@@ -26,11 +25,11 @@ border: none;
 font-size: 14px;
 max-width: 300px;
 max-height: 500px;
-background-color: rgb(131, 238, 145);
+background-color: rgb(122, 219, 135);
 text-align: left;
 margin-bottom: 10px;
 margin-right: 10px;
-border-radius:20px;
+border-radius:10px;
 padding-right: 10px;
 padding-left: 10px;
 padding-bottom: 10px;

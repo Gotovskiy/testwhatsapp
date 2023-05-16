@@ -1,10 +1,9 @@
-import React, { useEffect, useId, useState } from "react";
 import styled from "styled-components";
 import ChatHeader from "./ChatHeader";
 import SendInput from "./SendInput";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
-import { addSessionMessage, sendMessage, updateSessionMessages } from "../../store/ContactSlice";
+import { sendMessage } from "../../store/ContactSlice";
 const Container = styled.div`
     flex: 70%;
     height: 100%;
@@ -24,10 +23,19 @@ flex-direction: column;
 justify-content: end;
 overflow-y:auto;
 overflow-x:hidden;
-scrollbar-color: #0000008d;
-scrollbar-width: none;
 ::-webkit-scrollbar {
-    display:none ;
+    height: 6px;
+    width: 4px;
+    background: #262b2c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b4b2b3;
+    -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
 }
 &.received {
 align-items: start;
@@ -44,9 +52,6 @@ function Right() {
 
 
     const changeMessages = (text) => {
-        const id = Date.now();
-        const item = {"message":text, "type":"send" , "id":id};
-        dispatch(updateSessionMessages({id:ActiveIndex , item:item}))
         dispatch(sendMessage({ActiveIndex , text}));    
     }
     return ( 

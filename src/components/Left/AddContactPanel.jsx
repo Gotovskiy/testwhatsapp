@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,7 @@ background-color: #ffffff;
 display: flex;
 justify-content: center;
 align-items: center;
+border-bottom: 1px solid #f0f2f5 ;
 `
 const AddBox = styled.div`
 width: 90%;

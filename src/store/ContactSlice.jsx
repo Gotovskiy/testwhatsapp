@@ -3,12 +3,12 @@ import axios from "axios";
 
 export const getContacts = createAsyncThunk(
    `contacts/getContacts`,
-   async (payload , { getState }) => {
+   async (_ , { getState }) => {
       const state = getState();
       try
       { 
       const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/getContacts/${state.contacts.ApiTokenInstance}`)
-      const data = await response.data.slice(0 , 40)
+      const data = await response.data.slice(0 , 25)
       return data;
    }
       catch(error) {
@@ -56,12 +56,18 @@ export const receiveMessage = createAsyncThunk(
       const data = await response.data;
       await axios.delete(`https://api.green-api.com/waInstance${state.contacts.idinstance}/deleteNotification/${state.contacts.ApiTokenInstance}/${data.receiptId}`)
       console.log(data)
-      if (data == null || data.body.typeWebhook == "outgoingMessageStatus" || data.body.typeWebhook ==  "outgoingAPIMessageReceived"){
+      if (data == null || data.body.typeWebhook == "outgoingMessageStatus"){
          controller.abort()
       }
-      return data;
+      else{
+         return data;
+      }
+
       }
       catch(error) {
+         data == null?
+         null
+         :console.log(error)
       }
    }
 )
@@ -83,7 +89,6 @@ const ContactSlice = createSlice({
       addTokenAndId: (state, action) => {
          state.idinstance = action.payload.idInstance;
          state.ApiTokenInstance = action.payload.apiTokenInstance;
-         console.log(state.ApiTokenInstance , state.idinstance )
         },
      choseContact: (state , action) =>{
         state.activeIndex = action.payload;
@@ -115,9 +120,6 @@ const ContactSlice = createSlice({
          }
          
       },
-      [getContacts.rejected]: (state) => {
-         state.status = "rejected";
-      },
       [getContactInfo.fulfilled]: (state , action) =>{
       state.savedContactsInfo.push(action.payload);
       if (state.savedContactsInfo.length ==  state.savedContacts.length) {
@@ -128,22 +130,32 @@ const ContactSlice = createSlice({
          console.log("your message send!" , action.payload)
       },
       [receiveMessage.fulfilled]:(state , action) => {
-         if(action.payload == undefined){
-            return
-         }
-         else{
          const id = Date.now();
          const chatid = action.payload.body.senderData.chatId;
+         if (state.sessionMessages[[chatid]] != undefined){
          let message = "";
          action.payload.body.messageData.typeMessage == "extendedTextMessage"?
          message = action.payload.body.messageData.extendedTextMessageData.text
             :
          message = action.payload.body.messageData.textMessageData.textMessage;
 
-         if (state.sessionMessages[[chatid]] != undefined){
-            state.sessionMessages[[chatid]].push({"message":message, "type":"received" , "id":id});   
-         }}
-
+          switch (action.payload.body.typeWebhook) {
+            case "incomingMessageReceived":
+               state.sessionMessages[[chatid]].push({"message":message, "type":"received" , "id":id})
+               break;
+            case "outgoingMessageReceived":
+               state.sessionMessages[[chatid]].push({"message":message, "type":"send" , "id":id})
+               break;
+            case "outgoingAPIMessageReceived":
+               state.sessionMessages[[chatid]].push({"message":message, "type":"send" , "id":id})
+               break;       
+          
+            default:
+                return
+          }  
+          
+         
+         }
       },
       
     }
