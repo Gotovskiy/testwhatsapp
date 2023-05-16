@@ -51,15 +51,16 @@ export const receiveMessage = createAsyncThunk(
       const state = getState();
       try
       { 
-      const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/ReceiveNotification/${state.contacts.ApiTokenInstance}`)
+      const controller = new AbortController();
+      const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/ReceiveNotification/${state.contacts.ApiTokenInstance}`,{signal: controller.signal})
       const data = await response.data;
-      if(data.receiptId != undefined){
       await axios.delete(`https://api.green-api.com/waInstance${state.contacts.idinstance}/deleteNotification/${state.contacts.ApiTokenInstance}/${data.receiptId}`)
+      console.log(data)
+      if (data == null || data.body.typeWebhook == "outgoingMessageStatus" || data.body.typeWebhook ==  "outgoingAPIMessageReceived"){
+         controller.abort()
+      }
       return data;
-   }
-   else return
-      
-   }
+      }
       catch(error) {
       }
    }
@@ -127,13 +128,18 @@ const ContactSlice = createSlice({
          console.log("your message send!" , action.payload)
       },
       [receiveMessage.fulfilled]:(state , action) => {
-         if(action.payload === undefined){
+         if(action.payload == undefined){
             return
          }
          else{
          const id = Date.now();
-         const chatid = action.payload.body.senderData.chatId
-         const message = action.payload.body.messageData.textMessageData.textMessage 
+         const chatid = action.payload.body.senderData.chatId;
+         let message = "";
+         action.payload.body.messageData.typeMessage == "extendedTextMessage"?
+         message = action.payload.body.messageData.extendedTextMessageData.text
+            :
+         message = action.payload.body.messageData.textMessageData.textMessage;
+
          if (state.sessionMessages[[chatid]] != undefined){
             state.sessionMessages[[chatid]].push({"message":message, "type":"received" , "id":id});   
          }}
