@@ -42,7 +42,7 @@ function ContactList() {
         setLoad(true);
         setInterval(() => {
           dispatch(receiveMessage())
-        }, 20000);
+        }, 5000);
       };
     }, [savedContactsInfoLoaded])
 
