@@ -16,7 +16,9 @@ align-items: center;
 const ActiveContactAvatar = styled.img`
 height: 49px;
 width: 49px;
-padding-left: 10px;
+margin-left: 10px;
+border: 3px solid #d1d7db;
+border-radius: 30px;
 `
 const ActiveContactNumber = styled.span`
 padding-left: 20px;

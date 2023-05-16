@@ -1,17 +1,32 @@
 import styled from "styled-components";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ContactListItem from "./ContactListItem";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import {getContacts , getContactInfo, choseContact, receiveMessage} from "../../store/ContactSlice";
+import { useDispatch, useSelector } from "react-redux";;
+import {getContacts , getContactInfo, receiveMessage} from "../../store/ContactSlice";
 const Container = styled.div`
 width: 100%;
 height: 95%;
 background-color: #ffffff;
-overflow-y: hidden;
 display: flex;
+overflow: hidden;
 flex-direction: column-reverse;
 justify-content: start;
+`
+const AddedItems = styled.div`
+width:100%;
+height:100%;
+display: flex;
+flex-direction: column-reverse;
+margin: 0 auto;
+margin-top: 15px;
+overflow-y:auto;
+overflow-x:hidden;
+scrollbar-color: #0000008d;
+scrollbar-width: none;
+::-webkit-scrollbar {
+    display:none ;
+}
+
 `
 const NoContacts = styled.div`
 width:100%;
@@ -42,7 +57,7 @@ function ContactList() {
         setLoad(true);
         setInterval(() => {
           dispatch(receiveMessage())
-        }, 5000);
+        }, 10000);
       };
     }, [savedContactsInfoLoaded])
 
@@ -50,8 +65,10 @@ function ContactList() {
 
 
     return ( 
-    <Container> 
-     {load == true ? savedContactsInfo.map(item => <ContactListItem id={item.chatId} key={item.chatId}/>): <NoContacts>You haven't contacts</NoContacts> }   
+    <Container>
+      <AddedItems>
+      {load == true ? savedContactsInfo.map(item => <ContactListItem id={item.chatId} key={item.chatId}/>): <NoContacts>You haven't contacts</NoContacts> }
+      </AddedItems>   
     </Container> );
 }
 

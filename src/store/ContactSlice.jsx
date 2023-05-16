@@ -8,7 +8,7 @@ export const getContacts = createAsyncThunk(
       try
       { 
       const response = await axios.get(`https://api.green-api.com/waInstance${state.contacts.idinstance}/getContacts/${state.contacts.ApiTokenInstance}`)
-      const data = await response.data.slice(0 , 10)
+      const data = await response.data.slice(0 , 40)
       return data;
    }
       catch(error) {

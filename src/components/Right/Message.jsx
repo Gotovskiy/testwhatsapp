@@ -25,7 +25,7 @@ list-style: none;
 border: none;
 font-size: 14px;
 max-width: 300px;
-max-height: 200px;
+max-height: 500px;
 background-color: rgb(131, 238, 145);
 text-align: left;
 margin-bottom: 10px;

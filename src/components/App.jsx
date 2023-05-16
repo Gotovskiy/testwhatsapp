@@ -4,7 +4,7 @@ import Left from './Left/Left'
 import Right from './Right/Right'
 import { useSelector } from 'react-redux'
 import ModalWindow from './ModalWindow'
-import { faL } from '@fortawesome/free-solid-svg-icons'
+
 const Container = styled.div`
  position: relative;
  height: 100vh;

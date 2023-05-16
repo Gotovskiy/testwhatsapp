@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { getContactInfo , choseContact, addSingleContact} from "../../store/ContactSlice";
+import { getContactInfo , addSingleContact} from "../../store/ContactSlice";
 const Container = styled.div`
 width: 100%;
 height: 48px;
@@ -58,7 +58,7 @@ const addNewContact = async () => {
         <AddIconBox>
         <FontAwesomeIcon icon={faPlus} onClick={() => addNewContact()} />
         </AddIconBox>
-        <AddInput value={inputValue} onChange={(e) => setValue(e.target.value)} placeholder="Новый чат / 79966175980"/>
+        <AddInput value={inputValue} onChange={(e) => setValue(e.target.value)} placeholder="Новый чат / Формат: 79966175980"/>
         </AddBox>
     </Container> );
 }

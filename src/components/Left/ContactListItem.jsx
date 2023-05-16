@@ -21,8 +21,9 @@ cursor: pointer;
 const ContactAvatar = styled.img`
 width:49px;
 height:49px;
-padding-left: 10px;
-border-radius: 0px;
+margin-left: 10px;
+border-radius: 30px;
+border: 3px solid #d1d7db
 `
 const InfoBox = styled.div`
 height: 100%;

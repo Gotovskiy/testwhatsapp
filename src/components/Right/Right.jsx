@@ -22,7 +22,13 @@ width: 100%;
 display: flex;
 flex-direction: column;
 justify-content: end;
-overflow-y: scroll;
+overflow-y:auto;
+overflow-x:hidden;
+scrollbar-color: #0000008d;
+scrollbar-width: none;
+::-webkit-scrollbar {
+    display:none ;
+}
 &.received {
 align-items: start;
 }
